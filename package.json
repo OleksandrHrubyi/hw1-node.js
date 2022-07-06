@@ -1,0 +1,33 @@
+{
+  "name": "hw1-node",
+  "version": "1.0.0",
+  "description": "node",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OleksandrHrubyi/hw1-node.js.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Oleksandr Hrubyi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OleksandrHrubyi/hw1-node.js/issues"
+  },
+  "homepage": "https://github.com/OleksandrHrubyi/hw1-node.js#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^7.2.0",
+    "shortid": "^2.2.16"
+  }
+}
