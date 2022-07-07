@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { join } from "path";
 import { promises as fs } from "fs";
 import { generate } from "shortid";
@@ -8,8 +7,8 @@ const contactsPath = join("db", "contacts.json");
 async function listContacts() {
   try {
       const data = await fs.readFile(contactsPath);
-      const result = JSON.parse(data)
-      console.table(result);
+    const result = JSON.parse(data)
+    
       return result
     
   } catch (error) {
@@ -19,9 +18,11 @@ async function listContacts() {
 
 async function getContactById(contactId) {
   try {
-    const data = await fs.readFile(contactsPath, "utf-8");
-    const result = JSON.parse(data);
-    const user = result.find((el) => el.id === Number(contactId));
+    const data = await listContacts();
+    const user = data.find((el) => el.id === Number(contactId));
+    if (!user) {
+      return null
+    }
     console.table(user);
     return user
   } catch (error) {
@@ -31,17 +32,16 @@ async function getContactById(contactId) {
 
 async function removeContact(contactId) {
   try {
-    const data = await fs.readFile(contactsPath, "utf-8");
-      const result = JSON.parse(data);
-      const allData = result.filter((el) => el.id !== Number(contactId))
+      const data = await listContacts();
+      const allData = data.filter((el) => el.id !== Number(contactId))
       console.table(allData);
       await fs.writeFile(contactsPath, JSON.stringify(allData, null, "\t"));
       return allData
-    
-  } catch (error) {
+    } catch (error) {
     console.log(error);
   }
 }
+
 
 async function addContact(name, email, phone) {
   const user = {
@@ -51,12 +51,11 @@ async function addContact(name, email, phone) {
     phone,
   };
   try {
-    const data = await fs.readFile(contactsPath, "utf-8");
-    const arr = JSON.parse(data);
-    arr.push(user);
-    await fs.writeFile(contactsPath, JSON.stringify(arr, null, "\t"));
-      console.table(arr);
-      return arr
+    const data = await listContacts();
+    data.push(user);
+    await fs.writeFile(contactsPath, JSON.stringify(data, null, "\t"));
+      console.table(data);
+      return data
   } catch (error) {
     console.log(error);
   }

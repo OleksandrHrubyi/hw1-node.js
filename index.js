@@ -1,6 +1,3 @@
-import chalk from "chalk";
-import path from "path";
-import fs from "fs";
 import actions from "./contacts.js";
 
 import { Command } from "commander";
