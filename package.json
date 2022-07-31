@@ -28,6 +28,6 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^7.2.0",
-    "shortid": "^2.2.16"
+    "nanoid": "^4.0.0"
   }
 }

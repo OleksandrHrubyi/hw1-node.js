@@ -1,6 +1,6 @@
 import { join } from "path";
 import { promises as fs } from "fs";
-import { generate } from "shortid";
+import { nanoid } from 'nanoid'
 
 const contactsPath = join("db", "contacts.json");
 
@@ -8,11 +8,11 @@ async function listContacts() {
   try {
       const data = await fs.readFile(contactsPath);
     const result = JSON.parse(data)
-    
+    console.log(result);
       return result
     
   } catch (error) {
-    console.log(error);
+    return error
   }
 }
 
@@ -23,29 +23,38 @@ async function getContactById(contactId) {
     if (!user) {
       return null
     }
-    console.table(user);
-    return user
+    else {
+      console.table(user);
+      return user
+    }
+   
   } catch (error) {
-    console.log(error);
+    return error
   }
 }
 
 async function removeContact(contactId) {
   try {
-      const data = await listContacts();
+    const data = await listContacts();
+    const idToRemove = data.find((el) => el.id === Number(contactId))
+    if (idToRemove) {
       const allData = data.filter((el) => el.id !== Number(contactId))
-      console.table(allData);
       await fs.writeFile(contactsPath, JSON.stringify(allData, null, "\t"));
+      console.log(allData);
       return allData
+    }
+    else {
+      return null
+    }
     } catch (error) {
-    console.log(error);
+     return error
   }
 }
 
 
 async function addContact(name, email, phone) {
   const user = {
-    id: generate(),
+    id: nanoid(),
     name,
     email,
     phone,
@@ -54,10 +63,9 @@ async function addContact(name, email, phone) {
     const data = await listContacts();
     data.push(user);
     await fs.writeFile(contactsPath, JSON.stringify(data, null, "\t"));
-      console.table(data);
       return data
   } catch (error) {
-    console.log(error);
+    return error
   }
 }
 
